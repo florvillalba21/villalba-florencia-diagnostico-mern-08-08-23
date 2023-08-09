@@ -3,7 +3,7 @@ export const ButtonAddTask = () => {
     const navigate = useNavigate();
   return (
     <div>
-      <button type="button" onClick={()=>{navigate("/add")}}>Crear una nueva tarea</button>
+      <button className="btn btn-primary" type="button" onClick={()=>{navigate("/add")}}>Crear una nueva tarea</button>
     </div>
   );
 };
