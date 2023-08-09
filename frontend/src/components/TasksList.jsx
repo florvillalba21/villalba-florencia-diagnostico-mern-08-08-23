@@ -4,7 +4,7 @@ import axios from "axios";
 export const TasksList = () => {
   const [tasks, setTasks] = useState([]);
 
-  const getTasks= async()=>{
+  const getTasks = async () => {
     axios
       .get("http://localhost:3000")
       .then((res) => {
@@ -13,31 +13,29 @@ export const TasksList = () => {
           setTasks(res.data);
         }
       })
+      .catch((err) => console.log(err));
+  };
+
+  const toggleTaskState = async (id) => {
+    axios
+      .patch(`http://localhost:3000/updateTask/${id}`)
+      .then((res) => console.log(res))
       .catch((err) => console.log(err))
-  }
+      .finally(getTasks);
+  };
+
+  const deleteTask = async (id) => {
+    axios
+      .delete(`http://localhost:3000/delTask/${id}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+      .finally(getTasks);
+      
+  };
 
   useEffect(() => {
-    getTasks()   
+    getTasks();
   }, []);
-
-
-  const toggleTaskState = async(id)=>{
-    axios.patch(`http://localhost:3000/updateTask/${id}`)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-    .finally(getTasks())
-    
-
-  }
-
-  const deleteTask = async(id)=>{
-    axios.delete(`http://localhost:3000/delTask/${id}`)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-    .finally(getTasks())
-    
-
-  }
 
   return (
     <>
@@ -52,33 +50,33 @@ export const TasksList = () => {
           </tr>
         </thead>
         <tbody>
-          {tasks.length > 0 ? (
-            tasks.map((value, key) => (
-              <tr key={key}>
-                <td>{value.taskName}</td>
-                <td>{value.taskDescription}</td>
-                <td>{value.taskCompleted.toString()}</td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={()=>{ toggleTaskState(value._id)}}
-                  >
-                    Cambiar estado
-                  </button>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={()=>{ deleteTask(value._id)}}
-                  >
-                    Eliminar tarea
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <p>No hay tareas por mostrar</p>
-          )}
+          {tasks.map((value, key) => (
+            <tr key={key}>
+              <td>{value.taskName}</td>
+              <td>{value.taskDescription}</td>
+              <td>{value.taskCompleted.toString()}</td>
+              <td>
+                <button
+                  type="button"
+                  onClick={() => {
+                    toggleTaskState(value._id);
+                  }}
+                >
+                  Cambiar estado
+                </button>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  onClick={() => {
+                    deleteTask(value._id);
+                  }}
+                >
+                  Eliminar tarea
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>

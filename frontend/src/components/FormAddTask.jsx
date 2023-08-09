@@ -4,7 +4,7 @@ import { useState } from "react";
 export const FormAddTask = () => {
   const [data, setData] = useState({
     taskName: "",
-    taskDescription: ""
+    taskDescription: "",
   });
 
   const handleInput = (event) => {
@@ -14,17 +14,20 @@ export const FormAddTask = () => {
     });
   };
 
-
   const addTask = () => {
-    console.log(data)
-    axios.post("http://localhost:3000/addTask", data)
-    .then(res => {console.log(res.data)})
-    .catch(err => console.log(err));
+    console.log(data);
+    axios
+      .post("http://localhost:3000/addTask", data)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   };
   return (
-    <div>
+    <div className="row g-3 align-items-center" style={{width: 300}}>
       <form>
         <input
+          className="form-control"
           type="text"
           name="taskName"
           placeholder="Ingresa el nombre de la tarea"
@@ -32,6 +35,7 @@ export const FormAddTask = () => {
         />
         <br />
         <input
+          className="form-control"
           type="text"
           name="taskDescription"
           placeholder="Ingresa la descripcion"
@@ -39,7 +43,7 @@ export const FormAddTask = () => {
         />
         <br />
 
-        <button type="button" onClick={addTask}>
+        <button className="btn btn-primary" type="button" onClick={addTask}>
           Agregar tarea
         </button>
       </form>

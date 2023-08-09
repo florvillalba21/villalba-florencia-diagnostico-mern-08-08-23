@@ -34,7 +34,7 @@ const ctrlTask = {
         taskId,
         { $set: { taskCompleted: !task.taskCompleted } },
         { new: true }
-      ).exec();
+      )
 
       if(!updateTask){
         res.json({msg: "no se pudo actualizar"})
